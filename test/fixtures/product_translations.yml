@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  short_description: MyString
+  specifications: MyString
+  characteristics: MyString
+  color: MyString
+  product: one
+  language_code: one
+
+two:
+  description: MyString
+  short_description: MyString
+  specifications: MyString
+  characteristics: MyString
+  color: MyString
+  product: two
+  language_code: two

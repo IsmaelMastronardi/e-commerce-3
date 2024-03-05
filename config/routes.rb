@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :product_translations
+  resources :language_codes
+  resources :product_details
+  resources :order_products
+  resources :products
+  resources :categories
+  resources :brands
+  resources :orders
+  resources :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

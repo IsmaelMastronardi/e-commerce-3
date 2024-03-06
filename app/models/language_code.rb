@@ -1,2 +1,0 @@
-class LanguageCode < ApplicationRecord
-end

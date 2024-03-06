@@ -1,13 +1,26 @@
 Rails.application.routes.draw do
-  resources :product_translations
-  resources :language_codes
-  resources :product_details
-  resources :order_products
-  resources :products
-  resources :categories
-  resources :brands
-  resources :orders
-  resources :users
+  namespace :api do
+    namespace :v1 do
+      resources :users do [ :show, :create]
+        resources :orders do
+          resources :order_products
+        end
+      end
+      resources :language_codes do [ :index ]
+      end
+      resources :categories do [ :index, :show, :create, :update, :destroy]
+      end
+      resources :brands do [ :index, :show, :create, :update, :destroy]
+      end
+      resources :products do 
+        resources :product_details
+        resources :product_translations
+      end
+    end
+  end
+
+
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

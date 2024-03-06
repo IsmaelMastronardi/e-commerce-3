@@ -26,13 +26,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_04_230332) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "language_codes", force: :cascade do |t|
-    t.string "language", null: false
-    t.string "iso", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "order_products", force: :cascade do |t|
     t.integer "quantity", default: 1, null: false
     t.bigint "order_id", null: false
@@ -65,16 +58,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_04_230332) do
   end
 
   create_table "product_translations", force: :cascade do |t|
+    t.string "language", null: false
+    t.string "name", null: false
     t.string "description", null: false
     t.string "short_description", null: false
     t.string "specifications", null: false
     t.string "characteristics", null: false
     t.string "color", null: false
     t.bigint "product_id", null: false
-    t.bigint "language_code_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["language_code_id"], name: "index_product_translations_on_language_code_id"
     t.index ["product_id"], name: "index_product_translations_on_product_id"
   end
 
@@ -101,7 +94,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_04_230332) do
   add_foreign_key "order_products", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "product_details", "products"
-  add_foreign_key "product_translations", "language_codes"
   add_foreign_key "product_translations", "products"
   add_foreign_key "products", "brands"
   add_foreign_key "products", "categories"

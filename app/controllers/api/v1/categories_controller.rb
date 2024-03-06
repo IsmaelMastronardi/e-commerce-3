@@ -1,16 +1,17 @@
-class CategoriesController < ApplicationController
+class Api::V1::CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show update destroy ]
 
   # GET /categories
   def index
-    @categories = Category.all
+    @categories = Category.all.includes(:products)
 
     render json: @categories
   end
 
   # GET /categories/1
   def show
-    render json: @category
+    @items = @category.products
+    render json: @items
   end
 
   # POST /categories
@@ -18,7 +19,7 @@ class CategoriesController < ApplicationController
     @category = Category.new(category_params)
 
     if @category.save
-      render json: @category, status: :created, location: @category
+      render json: @category, status: :created, location: api_v1_category_url(@category)
     else
       render json: @category.errors, status: :unprocessable_entity
     end

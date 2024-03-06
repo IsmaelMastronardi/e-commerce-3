@@ -1,4 +1,4 @@
-class ProductsController < ApplicationController
+class Api::V1::ProductsController < ApplicationController
   before_action :set_product, only: %i[ show update destroy ]
 
   # GET /products
@@ -10,15 +10,22 @@ class ProductsController < ApplicationController
 
   # GET /products/1
   def show
-    render json: @product
+    render json: @product.as_json(
+      include: {
+        product_detail: {},
+        product_translations: {},
+        category: {},
+        brand: {},
+      }
+    )
   end
 
   # POST /products
   def create
-    @product = Product.new(product_params)
-
+    @product = Product.new(product_params[:atributes])
+    @product.product_detail = ProductDetail.new(product_params[:product_details])
     if @product.save
-      render json: @product, status: :created, location: @product
+      render json: @product, include: [:product_detail], status: :created, location: api_v1_product_url(@product)
     else
       render json: @product.errors, status: :unprocessable_entity
     end
@@ -46,6 +53,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:name, :price, :available_amount, :image, :category_id, :brand_id)
+      params.require(:product).permit(atributes: [:name, :price, :available_amount, :image, :category_id, :brand_id], product_details: [:description, :short_description, :specifications, :characteristics, :color])
     end
 end

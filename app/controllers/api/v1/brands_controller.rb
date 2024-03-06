@@ -1,4 +1,4 @@
-class BrandsController < ApplicationController
+class Api::V1::BrandsController < ApplicationController
   before_action :set_brand, only: %i[ show update destroy ]
 
   # GET /brands
@@ -18,7 +18,7 @@ class BrandsController < ApplicationController
     @brand = Brand.new(brand_params)
 
     if @brand.save
-      render json: @brand, status: :created, location: @brand
+      render json: @brand, status: :created, location: api_v1_brand_url(@brand)
     else
       render json: @brand.errors, status: :unprocessable_entity
     end
